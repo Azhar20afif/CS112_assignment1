@@ -67,18 +67,47 @@ void stud_detail_Mod(vector<Students>& s,int i)
             cout<<"Student's department\n";
             cin>>s[i].department;
 }
+void basic_teach_detail(vector<Teacher> t)
+{
+     for(int i=0;i<t.size();i++)
+            {
+            cout<<"S.no "<<i+1<<" "<<t[i].person.name<<endl;
+            cout<<"Education level: "<<t[i].person.education<<endl;
+            cout<<"\n\n";
+            }
+}
+void admin_teach_detail(vector<Teacher> t)
+{
+for(int i=0;i<t.size();i++)
+{    
+cout<<"Name: "<<t[i].person.name<<endl;
+cout<<"Age: "<<t[i].person.age<<endl;
+cout<<"Address: "<<t[i].person.address<<endl;
+cout<<"Education: "<<t[i].person.education<<endl;
+cout<<"Salary: "<<t[i].sal<<endl;
+}
+}
+void specific_teach_detail(vector<Teacher> t,int i)
+{
+cout<<"Name: "<<t[i-1].person.name<<endl;
+cout<<"Age: "<<t[i-1].person.age<<endl;
+cout<<"Address: "<<t[i-1].person.address<<endl;
+cout<<"Education: "<<t[i-1].person.education<<endl;
+cout<<"Salary: "<<t[i-1].sal<<endl;
+
+}
 void teach_detail_Mod(vector<Teacher>& t,int i)
 {
      cout<<"Teacher's name\n";
-            cin>>t[i].person.name;
-            cout<<"Teacher's age\n";
-            cin>>t[i].person.age;
-            cout<<"Teacher's address";
-            cin>>t[i].person.address;
-            cout<<"Teacher's education";
-            cin>>t[i].person.education;
-            cout<<"Teachers salary\n";
-            cin>>t[i].sal;
+    cin>>t[i].person.name;
+    cout<<"Teacher's age\n";
+    cin>>t[i].person.age;
+    cout<<"Teacher's address";
+    cin>>t[i].person.address;
+    cout<<"Teacher's education";
+    cin>>t[i].person.education;
+    cout<<"Teachers salary\n";
+    cin>>t[i].sal;
 }
 void course_detail_Mod(vector<Course>& c,int i)
 {
@@ -103,11 +132,12 @@ void rloop(int& loop)
 int main()
 {
 Hello();
-int opt,num,ssize=0,tsize=0,csize=0,yes=0;
+int opt,num,ssize=0,tsize=0,csize=0,yes=0,mainloop=0;
 vector<Admin> a(1);
 vector<Students> s(0);
 vector<Teacher> t(0);
 vector<Course> c(0);
+do{
 cout<<"If you are Admin press 1, if Teacher press 2 , if Student press 3\n";
 cin>>opt;
 switch(opt)
@@ -202,9 +232,9 @@ switch(opt)
             cin>>t[tsize].person.name;
             cout<<"Teacher's age\n";
             cin>>t[tsize].person.age;
-            cout<<"Teacher's address";
+            cout<<"Teacher's address\n";
             cin>>t[tsize].person.address;
-            cout<<"Teacher's education";
+            cout<<"Teacher's education\n";
             cin>>t[tsize].person.education;
             cout<<"Teachers salary\n";
             cin>>t[tsize].sal;
@@ -224,7 +254,7 @@ switch(opt)
         do{
         int Press;
         cout<<"Press 1 to check current number of teacher's\n";
-        cout<<"Press 2 to view teacher's details\n";
+        cout<<"Press 2 to view all teacher's details\n";
         cout<<"Press 3 to update teacher's detail\n";
         cin>>Press;
         if(Press==1)
@@ -233,10 +263,7 @@ switch(opt)
         }
         if(Press==2)
         {
-            for(int i;i<t.size();i++)
-            {
-            cout<<t[i].person.name;
-            }
+            admin_teach_detail(t);
         }
         if(Press==3)
         {
@@ -275,6 +302,7 @@ switch(opt)
         if(Press==3)
         {
             //come here later
+            csize--;
         }
         rloop(loop);
         }while(loop!=1);
@@ -291,9 +319,10 @@ switch(opt)
         {
         for(int i=0;i<c.size();i++)
         {
+            cout<<"S.NO "<<i+1<<endl;
             cout<<"Course name: "<<c[i].cname<<endl;
             cout<<"Course code: "<<c[i].ccode<<endl;
-            cout<<"Alloted to: "<<t[i].course.tname<<endl;
+            cout<<"Allocated to: "<<t[i].course.tname<<endl;
         }
         }
         if(Press==2)
@@ -334,6 +363,7 @@ switch(opt)
             cin>>k;
             t[k-1].course.tname=t[k-1].person.name;
             t[k-1].course.cname=c[j-1].cname;
+            cout<<"You have allocated "<<t[k-1].course.cname<<" to "<<t[k-1].course.tname<<endl;
         }
         if(Press==3)
         {
@@ -350,6 +380,40 @@ switch(opt)
     cout<<"Press 1 to return to main menu,otherwise press anything else to repeat current menu";
     cin>>yes;
     }while(yes!=1);
+    break;
+    case 2:
+    Hello();
+    int tnum,tsnum,tpress;
+    cout<<"Hello Sir/Madam can you please enter your S.no, to check your S.no and basic details press 1 and to enter your S.no press 2\n";
+    cin>>tnum; //teachernumber
+    if(tnum==1)
+    {
+        basic_teach_detail(t);
+    }
+    if(tnum==2)
+    {
+        cout<<"Your serial number:\n";
+        cin>>tsnum;//teacherserialnumber
+        cout<<"Hello Professor "<<t[tsnum-1].person.name<<endl;
+        cout<<"1)Your details\n";
+        cout<<"2)Courses allocated to you\n";
+        cout<<"3)Students enrolled in your courses\n";
+        cout<<"4)Assign marks and grades\n";
+        cout<<"5)See the top students of your class\n";
+        cout<<"6)Grade wise divison of students in your class\n";
+        cout<<"Enter the number respective to your option\n";
+        cin>>tpress; //teacher press
+        if(tpress==1)
+        {
+            specific_teach_detail(t,tsnum);
+        }
+        if(tpress==2)
+        {
+            for(int i=0;i<t.size();i++)
+            cout<<"You have been allocated: "<<t[tsnum-1].course.cname;
+        }
+    }
 }
+}while(true);
     return 0;
 }
